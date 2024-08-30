@@ -79,6 +79,12 @@ _G.packer_plugins = {
     path = "C:\\Users\\sibri\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  catppuccin = {
+    config = { "\27LJ\2\n@\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0!colorscheme catppuccin-mocha\bcmd\bvim\0" },
+    loaded = true,
+    path = "C:\\Users\\sibri\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "C:\\Users\\sibri\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-buffer",
@@ -149,20 +155,14 @@ _G.packer_plugins = {
     path = "C:\\Users\\sibri\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["rose-pine"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme rose-pine\bcmd\bvim\0" },
-    loaded = true,
-    path = "C:\\Users\\sibri\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\rose-pine",
-    url = "https://github.com/rose-pine/neovim"
-  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "C:\\Users\\sibri\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["vim-tmux-navigator"] = {
-    commands = { "tmuxnavigateLeft", "tmuxnavigateDown", "tmuxnavigateUp", "tmuxnavigateRight", "tmuxnavigatePrevious" },
-    keys = { { "<c-h>", "<cmd><C-U>tmuxnavigateLeft<cr>" }, { "<c-j>", "<cmd><C-U>tmuxnavigateDown<cr>" }, { "<c-k>", "<cmd><C-U>tmuxnavigateUp<cr>" }, { "<c-l>", "<cmd><C-U>tmuxnavigateRight<cr>" }, { "<c-\\>", "<cmd><C-U>tmuxnavigatePrevious<cr>" } },
+    commands = { "tmuxnavigateLeft", "tmuxnavigateDown", "tmuxnavigateUp", "tmuxnavigateRight" },
+    keys = { { "<c-h>", "<cmd><C-U>tmuxnavigateLeft<cr>" }, { "<c-j>", "<cmd><C-U>tmuxnavigateDown<cr>" }, { "<c-k>", "<cmd><C-U>tmuxnavigateUp<cr>" }, { "<c-l>", "<cmd><C-U>tmuxnavigateRight<cr>" } },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -172,13 +172,20 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: rose-pine
-time([[Config for rose-pine]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme rose-pine\bcmd\bvim\0", "config", "rose-pine")
-time([[Config for rose-pine]], false)
+-- Config for: catppuccin
+time([[Config for catppuccin]], true)
+try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0!colorscheme catppuccin-mocha\bcmd\bvim\0", "config", "catppuccin")
+time([[Config for catppuccin]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
+pcall(vim.api.nvim_create_user_command, 'tmuxnavigateUp', function(cmdargs)
+          require('packer.load')({'vim-tmux-navigator'}, { cmd = 'tmuxnavigateUp', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'vim-tmux-navigator'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('tmuxnavigateUp ', 'cmdline')
+      end})
 pcall(vim.api.nvim_create_user_command, 'tmuxnavigateRight', function(cmdargs)
           require('packer.load')({'vim-tmux-navigator'}, { cmd = 'tmuxnavigateRight', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
@@ -193,13 +200,6 @@ pcall(vim.api.nvim_create_user_command, 'tmuxnavigateLeft', function(cmdargs)
           require('packer.load')({'vim-tmux-navigator'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('tmuxnavigateLeft ', 'cmdline')
       end})
-pcall(vim.api.nvim_create_user_command, 'tmuxnavigatePrevious', function(cmdargs)
-          require('packer.load')({'vim-tmux-navigator'}, { cmd = 'tmuxnavigatePrevious', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'vim-tmux-navigator'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('tmuxnavigatePrevious ', 'cmdline')
-      end})
 pcall(vim.api.nvim_create_user_command, 'tmuxnavigateDown', function(cmdargs)
           require('packer.load')({'vim-tmux-navigator'}, { cmd = 'tmuxnavigateDown', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
@@ -207,22 +207,14 @@ pcall(vim.api.nvim_create_user_command, 'tmuxnavigateDown', function(cmdargs)
           require('packer.load')({'vim-tmux-navigator'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('tmuxnavigateDown ', 'cmdline')
       end})
-pcall(vim.api.nvim_create_user_command, 'tmuxnavigateUp', function(cmdargs)
-          require('packer.load')({'vim-tmux-navigator'}, { cmd = 'tmuxnavigateUp', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'vim-tmux-navigator'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('tmuxnavigateUp ', 'cmdline')
-      end})
 time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
+vim.cmd [[<c-l>noremap <silent> <cmd><C-U>tmuxnavigateRight<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigateRight<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[<c-k>noremap <silent> <cmd><C-U>tmuxnavigateUp<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigateUp<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[<c-h>noremap <silent> <cmd><C-U>tmuxnavigateLeft<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigateLeft<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[<c-j>noremap <silent> <cmd><C-U>tmuxnavigateDown<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigateDown<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[<c-\>noremap <silent> <cmd><C-U>tmuxnavigatePrevious<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigatePrevious<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[<c-k>noremap <silent> <cmd><C-U>tmuxnavigateUp<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigateUp<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[<c-l>noremap <silent> <cmd><C-U>tmuxnavigateRight<cr> <cmd>lua require("packer.load")({'vim-tmux-navigator'}, { keys = "<lt>cmd><lt>C-U>tmuxnavigateRight<lt>cr>", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 

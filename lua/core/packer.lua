@@ -13,13 +13,12 @@ return require('packer').startup(function(use)
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  use({
-	  'rose-pine/neovim',
-	  as = 'rose-pine',
-	  tag = 'v1.*',
-	  config = function()
-		  vim.cmd('colorscheme rose-pine')
-	  end
+  use ({ 
+      "catppuccin/nvim", 
+      as = "catppuccin",
+      config = function()
+          vim.cmd("colorscheme catppuccin-mocha")
+      end
   })
 
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
@@ -55,14 +54,12 @@ return require('packer').startup(function(use)
         'tmuxnavigateDown',
         'tmuxnavigateUp',
         'tmuxnavigateRight',
-        'tmuxnavigatePrevious',
     },
     keys = {
         {'<c-h>', '<cmd><C-U>tmuxnavigateLeft<cr>'},
         {'<c-j>', '<cmd><C-U>tmuxnavigateDown<cr>'},
         {'<c-k>', '<cmd><C-U>tmuxnavigateUp<cr>'},
         {'<c-l>', '<cmd><C-U>tmuxnavigateRight<cr>'},
-        {'<c-\\>', '<cmd><C-U>tmuxnavigatePrevious<cr>'},
     }
   }
 
